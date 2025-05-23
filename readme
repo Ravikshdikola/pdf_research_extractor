@@ -1,0 +1,72 @@
+PDF Research Extractor - Streamlit App
+
+Overview:
+This Streamlit app extracts structured research paper information from PDF files using OCR, regex, and a Retrieval-Augmented Generation (RAG) pipeline powered by Ollama LLM models. It outputs metadata and key insights in an Excel file.
+
+Features:
+OCR Extraction: Uses PyMuPDF and Tesseract OCR to extract text from scanned PDFs.
+Metadata Extraction: Extracts DOI and ISSN identifiers using regex.
+RAG-based Info Extraction: Leverages Ollama LLM with FAISS vector search to extract paper title, authors, and summary.
+Excel Export: Saves the extracted data in an easy-to-use Excel format.
+Interactive UI: Upload PDFs and download results in a simple web app.
+
+Folder Structure:
+
+pdf_research_extractor/
+├── src/
+│   ├── app.py                # Streamlit app entrypoint
+│   ├── pipeline.py           # Main pipeline logic
+│   ├── ocr.py                # OCR-related functions
+│   ├── rag.py                # RAG info extraction functions
+│   ├── metadata.py           # Regex metadata extraction
+│   ├── utils.py              # Utility functions (e.g. bracket extraction)
+├── output/                   # Directory for generated Excel files
+├── samples/                  # Sample PDFs for testing
+├── requirements.txt          # Python dependencies
+└── README.md                 # This file
+
+
+Environment Setup:
+(1)Clone the repo:
+   git clone <your-github-repo-url>
+   cd pdf_research_extractor
+
+(2)Create a Python virtual environment (recommended):
+   python -m venv venv
+   source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+(3)Install dependencies:
+   pip install -r requirements.txt
+
+(4)Make sure Tesseract OCR is installed and added to your system PATH:
+   Windows: Download from Tesseract OCR GitHub
+   Linux/macOS: Use package managers like apt, brew, etc.
+   Make sure Ollama is installed and running on your machine. The app uses Ollama's local LLM API.
+
+
+How to Run the App
+Run Streamlit from the project root directory:
+streamlit run src/app.py
+The web app will open in your default browser.
+
+
+Usage:
+Upload a PDF research paper in the app interface.
+Click Run Extraction.
+Wait for the pipeline to process the PDF (OCR + metadata + RAG extraction).
+Download the Excel file containing extracted metadata, title, authors, and summary.
+
+
+Notes:
+The pipeline uses the deepseek-r1:7b Ollama model for RAG extraction.
+Supports scanned PDFs and text PDFs (via OCR).
+Output Excel files are saved in the /output folder by default.
+Sample PDFs are included in /samples for quick testing.
+
+
+Troubleshooting
+Ensure Tesseract OCR is correctly installed and accessible.
+Make sure Ollama is installed and running locally.
+If imports fail, verify your working directory is the project root and that src folder contains an __init__.py if using relative imports.
+Python version 3.7+ recommended.
+
