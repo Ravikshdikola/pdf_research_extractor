@@ -6,10 +6,21 @@ from metadata import extract_metadata
 from rag import extract_rag_info
 
 def save_to_excel(data: dict, output_path: str) -> None:
-    """Save extracted data dictionary to Excel file."""
+    """Append extracted data to an Excel file if it exists, otherwise create a new one."""
     try:
-        df = pd.DataFrame([data])
-        df.to_excel(output_path, index=False, engine='openpyxl')
+        new_df = pd.DataFrame([data])
+        
+        if os.path.exists(output_path):
+            # Load existing data and append
+            existing_df = pd.read_excel(output_path, engine='openpyxl')
+            combined_df = pd.concat([existing_df, new_df], ignore_index=True)
+        else:
+            # Create new DataFrame
+            combined_df = new_df
+
+        # Save to Excel
+        combined_df.to_excel(output_path, index=False, engine='openpyxl')
+
     except Exception as e:
         logging.error(f"Failed to save output to Excel: {e}")
         raise
